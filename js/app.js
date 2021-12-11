@@ -1,6 +1,7 @@
+let isPlayed = false;
+var audio = new Audio("../audio/audio.mp3");
 
- let isPlayed = false;
- var audio = new Audio('../audio/audio.mp3');
+let flag = 1;
 
 function createSnowFlake() {
   const snow_flake = document.createElement("i");
@@ -18,18 +19,35 @@ function createSnowFlake() {
   }, 5000);
 }
 
-window.addEventListener('click', () =>{
+window.addEventListener("click", () => {
+  setInterval(createSnowFlake, 110);
+  if (flag == 1) {
+    setTimeout(() => {
+      document.querySelector("#content").style.display = "block";
+      const cake = document.querySelector("#cake");
+      animate(cake, "bounceInDown");
+      const h1 = document.querySelector("#h1");
+      animate(h1, "fadeInUpBig");
+    }, 2000);
 
- setInterval(createSnowFlake, 110);
+    setTimeout(() => {
+      setInterval(createSnowFlake, 110);
+    }, 10000);
+    flag++;
+  }
 
- if(!isPlayed)
- {
-  audio.play();
-  isPlayed = true;
- }else{
-  audio.pause();
-  isPlayed = false;
- }
-  
+  if (!isPlayed) {
+    audio.play();
+    isPlayed = true;
+  } else {
+    audio.pause();
+    isPlayed = false;
+  }
+});
 
-})
+function animate(element, animation) {
+  element.classList.add(animation);
+  const wait = setTimeout(() => {
+    element.classList.remove(animation);
+  }, 2000);
+}
